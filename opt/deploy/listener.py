@@ -1,7 +1,8 @@
+import argparse
 import subprocess
 import urllib.request
 import json
-from http.server import BaseHTTPRequestHandler, HTTPServer
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 DISCORD_WEBHOOK = "<WEBHOOK>"
 
@@ -37,6 +38,16 @@ class WebhookHandler(BaseHTTPRequestHandler):
                 self.send_response(500)
                 self.end_headers()
 
-if __name__ == '__main__':
-    print("[+] Knju Backend active on port 8000")
-    HTTPServer(('0.0.0.0', 8000), WebhookHandler).serve_forever()
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--bind", default="127.0.0.1")
+    parser.add_argument("--port", type=int, default=8000)
+    args = parser.parse_args()
+
+    server = ThreadingHTTPServer((args.bind, args.port), WebhookHandler)
+    print(f"[*] Listener bound to {args.bind}:{args.port}", flush=True)
+    server.serve_forever()
+
+
+if __name__ == "__main__":
+    main()
