@@ -1,0 +1,12 @@
+[Unit]
+Description=Portfolio listener (Podman bridge)
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /opt/deploy/listener.py --bind 10.89.0.1 --port 8000
+Restart=always
+User=knju
+
+[Install]
+WantedBy=multi-user.target

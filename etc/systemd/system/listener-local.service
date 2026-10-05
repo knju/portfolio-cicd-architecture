@@ -1,0 +1,12 @@
+[Unit]
+Description=Portfolio listener (localhost)
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /opt/deploy/listener.py --bind 127.0.0.1 --port 8000
+Restart=always
+User=knju
+
+[Install]
+WantedBy=multi-user.target
