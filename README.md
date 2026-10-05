@@ -30,7 +30,7 @@ The entire environment configuration—including proxy routing, container orches
 ## Repository Structure
 
 ```text
-prod/
+/
 ├── etc/nginx/sites-available/
 │   └── portfolio.conf       # Nginx reverse proxy routing (Port 80/443 & 3000)
 └── opt/
