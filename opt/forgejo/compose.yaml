@@ -1,0 +1,13 @@
+services:
+  git:
+    image: codeberg.org/forgejo/forgejo:8
+    container_name: knju-git-prod
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+    volumes:
+      - /opt/forgejo/data:/data
+    ports:
+      - "127.0.0.1:3000:3000" # Bound to localhost; Nginx will proxy this later
+      - "2222:22"
+    restart: unless-stopped
