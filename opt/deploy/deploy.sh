@@ -1,4 +1,11 @@
 #!/bin/bash
+set -euo pipefail
+exec 200>/tmp/portfolio_deploy.lock
+flock -n 200 || {
+  echo "[-] Deployment already in progress. Exiting."
+  exit 1
+}
+
 # 1. Pull the latest code from your local Forgejo instance
 cd /var/www/portfolio
 git pull origin main

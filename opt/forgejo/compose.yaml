@@ -9,5 +9,4 @@ services:
       - /opt/forgejo/data:/data
     ports:
       - "127.0.0.1:3000:3000" # Bound to localhost; Nginx will proxy this later
-      - "2222:22"
     restart: unless-stopped

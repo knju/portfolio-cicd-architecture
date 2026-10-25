@@ -19,7 +19,7 @@ The pipeline securely routes traffic from the public web through a reverse proxy
 ## Key Engineering Challenges Solved
 
 ### 1. Cross-Boundary Container-to-Host Communication
-To maintain isolation, the Git forge runs inside a rootless Podman container. Triggering the host-level Hugo compiler required bridging the Podman virtual network (`10.89.0.1`) back to the host operating system. The Python webhook listener was bound to `0.0.0.0` to explicitly accept payloads originating from the containerized interface while blocking public access via UFW firewall rules.
+To maintain isolation, the Git forge runs inside a rootless Podman container. Triggering the host-level Hugo compiler required bridging the Podman virtual network (`10.89.0.1`) back to the host operating system. The Python webhook listener was bound to `127.0.0.1` and `10.89.0.1` to explicitly accept payloads originating from the containerized interface while blocking public access.
 
 ### 2. SSRF (Server-Side Request Forgery) Mitigation
 Modern Git forges block outbound webhooks to internal IP addresses by default to prevent network scanning. Rather than disabling this security feature globally with a wildcard (`*`), the `app.ini` security policy was surgically modified. The `ALLOWED_HOST_LIST` was configured to explicitly whitelist only the Podman gateway IP (`10.89.0.1`), preserving SSRF protection for the rest of the server infrastructure.
