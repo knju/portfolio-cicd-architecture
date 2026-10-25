@@ -18,7 +18,7 @@ class WebhookHandler(BaseHTTPRequestHandler):
 
         # Route 2: Contact Form from Frontend
         elif self.path == '/api/contact':
-            content_length = int(self.headers['Content-Length'])
+            content_length = int(self.headers.get('Content-Length',0))
             post_data = self.rfile.read(content_length)
             
             try:
